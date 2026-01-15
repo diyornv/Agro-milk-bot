@@ -59,7 +59,14 @@ async def clear_cow_photos(cow_id: int):
 async def get_cow(cow_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute("SELECT description FROM cows WHERE cow_id = ?", (cow_id,)) as cursor:
-            return await cursor.fetchone()
+            desc_row = await cursor.fetchone()
+        async with db.execute("SELECT file_id FROM cow_photos WHERE cow_id = ? LIMIT 1", (cow_id,)) as cursor:
+            photo_row = await cursor.fetchone()
+        if desc_row:
+            description = desc_row[0]
+            photo_file_id = photo_row[0] if photo_row else None
+            return (photo_file_id, description)
+        return None
 
 async def get_cow_photos(cow_id: int):
     async with aiosqlite.connect(DB_NAME) as db:

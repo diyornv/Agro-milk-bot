@@ -233,7 +233,7 @@ async def process_delete_id(message: Message, state: FSMContext):
 # --- Cow Lookup Handler ---
 # This handler matches ONLY digit messages, and is placed AFTER all command and language handlers.
 # It will NOT capture commands or non-numeric messages.
-@router.message(F.text.regexp(r"^\\d+$"), StateFilter("*"))
+@router.message(F.text.regexp(r"^\d+$"), StateFilter("*"))
 async def get_cow_info(message: Message, state: FSMContext):
     lang = await get_lang(message.from_user.id)
     if not await ensure_phone_verified(message.from_user.id):
