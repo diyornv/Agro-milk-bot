@@ -12,7 +12,10 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
-# Logs
-*.log
-# Aiogram
 *.session
+
+.env
+venv/
+__pycache__/
+*рус
+
